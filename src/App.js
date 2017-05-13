@@ -3,15 +3,20 @@ import logo from './logo.svg';
 import './App.css';
 import Header from './header/header'
 import { Button } from 'react-bootstrap';
+
+
+
 class App extends Component {
  title ="hello"
 
     render() {
+        return (        
+         <div className = "App" >
 
-        return ( <div className = "App" >
-            <Header title={this.title}/>
+
+            <Header title={this.title} header={this.props.header} />
            {this.props.children}
-            <h1></h1>
+            <h1> Student Home</h1>
 
 
 

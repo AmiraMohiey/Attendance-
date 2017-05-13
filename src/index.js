@@ -4,31 +4,32 @@ import './index.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 import {IndexRoute} from 'react-router'
-import {Router,BrowserRouter,Route,NavLink, Redirect, Switch} from 'react-router-dom';
+import {BrowserRouter,Route,NavLink, Redirect, Switch,history,browserHistory} from 'react-router-dom';
 
 import App from './App';
 import Login from './login/login';
-import SignUp from './signup/signup';
-import Header from './header/header'
-import './index.css';
 
+import Header from './header/header';
+import AttendenceAdmin from './admin/admin';
+import './index.css';
+import authClient from './authClient'
 
 ReactDOM.render(
 
- <BrowserRouter>
-        {/* If path is / then load the Home component */}
-<App>
-            <Switch>
-              
-                <Route   path="/login" component={Login} />
-                <Route  path="/signup" component={SignUp} />
-                {/*<Courses>
-                    <Route path="/courses/html" component={HTML} />
-                    <Route path="/courses/css" component={CSS} />
-                    <Route path="/courses/javascript" component={JavaScript} />
-                </Courses>*/}
+<BrowserRouter  history={browserHistory}>
 
-            </Switch>
- </App>
-    </BrowserRouter>
+
+            <Switch>
+                    <Route    exact={ true} path="/app" component={App}    />    
+                <Route  exact={ true} path="/" component={AttendenceAdmin}  />  
+                <Route  exact={ true} path="/login" component={Login}  />  
+              
+                 <Route   path="/admin/login" component={authClient} />                  
+
+            </Switch>                         
+
+   </BrowserRouter> 
+
+
+  
 , document.getElementById('root'));
