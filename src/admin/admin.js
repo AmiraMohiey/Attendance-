@@ -1,5 +1,5 @@
 
-
+import myApiRestClient from '../restClient';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
@@ -8,12 +8,14 @@ import { jsonServerRestClient, Admin, Resource } from 'admin-on-rest';
 import { AppBar,Title } from 'admin-on-rest';
 import { App } from '../App';
 import Login from '../login/login'
-import { PostList,PostEdit,PostCreate  } from '../posts';
-import { UserList } from '../users';
+import { BranchList,BranchEdit,BranchCreate  } from '../branches';
+import {TrackList,TrackCreate,TrackEdit} from '../tracks'
+import { UserList,UserCreate,UserEdit } from '../users';
 import MyLayout from '../MyLayout';
 import Dashboard from './Dashboard';
 import PostIcon from 'material-ui/svg-icons/action/book';
 import UserIcon from 'material-ui/svg-icons/social/group';
+import TrackIcon from 'material-ui/svg-icons/communication/import-contacts';
 import './admin.css';
 import authClient from '../authClient'
 import adminsidemenu from '../adminsidemenu'
@@ -29,10 +31,10 @@ class AttendenceAdmin extends Component
 
         return (
       
-    <Admin authClient={authClient} dashboard={Dashboard} title="Attendence Admin" restClient={jsonServerRestClient('http://jsonplaceholder.typicode.com')} >
-      
-        <Resource name="posts" list={PostList} icon={PostIcon} edit={PostEdit} create={PostCreate} remove={Delete}/>
-        <Resource name="users" list={UserList} icon={UserIcon} />
+    <Admin authClient={authClient} dashboard={Dashboard} title="Attendance Admin" restClient={myApiRestClient} >
+        <Resource name="branches" list={BranchList} icon={PostIcon} edit={BranchEdit} create={BranchCreate} remove={Delete}/>
+        <Resource name="tracks" list={TrackList} icon={TrackIcon} edit={TrackEdit} create={TrackCreate} remove={Delete}/>
+        <Resource name="users" list={UserList} icon={UserIcon} edit={UserEdit} create={UserCreate} remove={Delete}/>
        
         
     </Admin>

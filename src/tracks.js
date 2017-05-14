@@ -2,7 +2,7 @@ import React from 'react';
 import {List, Edit, Create, Datagrid, ReferenceField, TextField, EditButton, DisabledInput, LongTextInput, ReferenceInput, SelectInput, SimpleForm, TextInput } from 'admin-on-rest';
 
 
-export const PostList = (props) => (
+export const TrackList = (props) => (
     <List {...props}>
         <Datagrid>
              <ReferenceField label="User" source="userId" reference="users">
@@ -15,11 +15,11 @@ export const PostList = (props) => (
         </Datagrid>
     </List>
 );
-const PostTitle = ({ record }) => {
-    return <span>Post {record ? `"${record.title}"` : ''}</span>;
+const TrackName = ({ record }) => {
+    return <span>track {record ? `"${record.name}"` : ''}</span>;
 };
-export const PostEdit = (props) => (
-    <Edit title={<PostTitle />} {...props}>
+export const TrackEdit = (props) => (
+    <Edit title={<TrackName />} {...props}>
         <SimpleForm>
             <DisabledInput source="id" />
             <ReferenceInput label="User" source="userId" reference="users">
@@ -31,7 +31,7 @@ export const PostEdit = (props) => (
     </Edit>
 );
 
-export const PostCreate = (props) => (
+export const TrackCreate = (props) => (
     <Create {...props}>
         <SimpleForm>
             <ReferenceInput label="User" source="userId" reference="users" allowEmpty>

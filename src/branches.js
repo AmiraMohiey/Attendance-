@@ -1,23 +1,25 @@
 import React from 'react';
+import {List, Edit, Create, Datagrid, ReferenceField, TextField, EditButton, DisabledInput, LongTextInput, ReferenceInput, SelectInput, SimpleForm, TextInput } from 'admin-on-rest';
 
-import {List, Edit, Create, Datagrid, ReferenceField, TextField, EditButton, DisabledInput, LongTextInput, ReferenceInput, SelectInput, SimpleForm, TextInput,EmailField } from 'admin-on-rest';
 
-export const UserList = (props) => (
-    <List title="All users" {...props}>
+export const BranchList = (props) => (
+    <List {...props}>
         <Datagrid>
+             <ReferenceField label="User" source="userId" reference="users">
+                <TextField source="name" />
+            </ReferenceField>
             <TextField source="id" />
-            <TextField source="name" />
-            <TextField source="username" />
-            <EmailField source="email" />
-  <EditButton />
+            <TextField source="title" />
+            <TextField source="body" />
+ <EditButton />
         </Datagrid>
     </List>
 );
-const UserName = ({ record }) => {
-    return <span>user {record ? `"${record.name}"` : ''}</span>;
+const BranchName = ({ record }) => {
+    return <span>branch {record ? `"${record.name}"` : ''}</span>;
 };
-export const UserEdit = (props) => (
-    <Edit title={<UserName />} {...props}>
+export const BranchEdit = (props) => (
+    <Edit title={<BranchName />} {...props}>
         <SimpleForm>
             <DisabledInput source="id" />
             <ReferenceInput label="User" source="userId" reference="users">
@@ -29,7 +31,7 @@ export const UserEdit = (props) => (
     </Edit>
 );
 
-export const UserCreate = (props) => (
+export const BranchCreate = (props) => (
     <Create {...props}>
         <SimpleForm>
             <ReferenceInput label="User" source="userId" reference="users" allowEmpty>
