@@ -9,7 +9,7 @@ export default (type, params) => {
          const _username = params.username;
          const _password = params.password;
          console.log(JSON.stringify({ _username, _password }))
-         const request = new Request('http://localhost:8000/login', {
+         const request = new Request('http://localhost:8000/api/login_check', {
             method: 'POST',
             headers: new Headers({ 'Content-Type': 'application/json' }),
             body: JSON.stringify({ _username, _password }),
@@ -27,22 +27,22 @@ export default (type, params) => {
                 localStorage.setItem('token', token);
                 console.log("token",token)
             });
-        if(_username==='admin' &&_password==='123' )
-        {localStorage.setItem('admin', _username);}
+//         if(_username==='admin' &&_password==='123' )
+//         {localStorage.setItem('admin', _username);}
         
-else{      
+// else{      
   
   
 
 
          localStorage.setItem('username', _username);
     
-         window.location = "/app";
+        //  window.location = "/app";
 
           
           
       
-}
+// }
         return Promise.resolve()
         // return Promise.resolve();
    }
@@ -57,15 +57,15 @@ else{
     if (type === AUTH_ERROR) {
         const { status } = params;
         if (status === 401 || status === 403) {
-            localStorage.removeItem('_username');
-            localStorage.removeItem('admin');
+            localStorage.removeItem('token');
+            localStorage.removeItem('token');
             return Promise.reject();
         }
         return Promise.resolve();
     }
     // called when the user navigates to a new location
     if (type === AUTH_CHECK) {
-        return localStorage.getItem('admin') ? Promise.resolve() : Promise.reject();
+        return localStorage.getItem('token') ? Promise.resolve() : Promise.reject();
     }
     return Promise.reject('Unknown method');
 };
