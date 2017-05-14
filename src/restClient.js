@@ -9,7 +9,7 @@ import {
     fetchUtils,
 } from 'admin-on-rest';
 
-const API_URL = 'my.api.url'; // symfony url 
+const API_URL = 'http://localhost:8000/api'; // symfony url 
 
 /**
  * @param {String} type One of the constants appearing at the top if this file, e.g. 'UPDATE'
@@ -31,7 +31,7 @@ const convertRESTRequestToHTTP = (type, resource, params) => {
             range: JSON.stringify([(page - 1) * perPage, page * perPage - 1]),
             filter: JSON.stringify(params.filter),
         };
-        url = `${API_URL}/${resource}?${queryParameters(query)}`;
+        url = `${API_URL}/${resource}`;
         break;
     }
     case GET_ONE:
@@ -83,10 +83,12 @@ const convertRESTRequestToHTTP = (type, resource, params) => {
  * @returns {Object} REST response
  */
 const convertHTTPResponseToREST = (response, type, resource, params) => {
+    console.log("responce",Response)
     const { headers, json } = response;
     switch (type) {
     case GET_LIST:
         return {
+          
             data: json.map(x => x),
             total: parseInt(headers.get('content-range').split('/').pop(), 10),
         };
@@ -106,12 +108,12 @@ const convertHTTPResponseToREST = (response, type, resource, params) => {
 export default (type, resource, params) => {
     const { fetchJson } = fetchUtils;
     const { url, options } = convertRESTRequestToHTTP(type, resource, params);
-     if (!options.headers) {
-        options.headers = new Headers({ Accept: 'application/json' });
-    }
-    const token = localStorage.getItem('token');
-    options.headers.set('Authorization', `Bearer ${token}`);
-    return fetchUtils.fetchJson(url, options)
-    // return fetchJson(url, options)
+    //  if (!options.headers) {
+    //     options.headers = new Headers({ Accept: 'application/json' });
+    // }
+    // const token = localStorage.getItem('token');
+    // options.headers.set('Authorization', `Bearer ${token}`);
+    // return fetchUtils.fetchJson(url, options)
+     return fetchJson(url, options)
         .then(response => convertHTTPResponseToREST(response, type, resource, params));
 };

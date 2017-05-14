@@ -2,28 +2,15 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Header from './header/header'
-import { Button } from 'react-bootstrap';
+
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 
+import StudentHome from './studenthome';
 
-class App extends Component {
- title ="hello"
+export default  () => (
+  <MuiThemeProvider>
+    <StudentHome />
+  </MuiThemeProvider>
+);
 
-    render() {
-        return (        
-         <div className = "App" >
-
-
-            <Header title={this.title} header={this.props.header} />
-           {this.props.children}
-            <h1> Student Home</h1>
-
-
-
-            </div> 
-           
-        );
-    }
-}
-
-export default App;

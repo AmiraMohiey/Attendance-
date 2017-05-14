@@ -12,8 +12,8 @@ export default class dashboardclass  extends Component
 saverule(){
     console.log("save")
     var time=this.refs.times.getValue();
-    var degree=this.refs.degrees.getValue();
-    console.log(time,degree)
+    var grade=this.refs.grades.getValue();
+    console.log(time,grade)
 
 }
 render (){
@@ -25,9 +25,9 @@ render (){
         <h2> Attendance Rules</h2>
         <hr/>
         <TextField  ref='times' floatingLabelText="Absence Times"  defaultValue=""/><br/>
-        <TextField ref='degrees'  floatingLabelText="Degress "/><br/>
+        <TextField ref='grades'  floatingLabelText="Grades "/><br/>
 
-        <RaisedButton label="Primary" primary={true} style={{ margin: '50' }}  onClick={this.saverule}/>
+        <RaisedButton label="Save" primary={true} style={{ margin: '50' }}  onClick={this.saverule}/>
         </div>
     </Card>
     )}}
