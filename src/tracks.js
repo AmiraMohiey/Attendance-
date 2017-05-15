@@ -1,5 +1,5 @@
 import React from 'react';
-import {List, Edit, Create, Datagrid, ReferenceField, TextField, EditButton, DisabledInput, LongTextInput, ReferenceInput, SelectInput, SimpleForm, TextInput } from 'admin-on-rest';
+import {List, Edit, Create, Datagrid, ReferenceField, TextField, EditButton, DisabledInput, LongTextInput, ReferenceInput, SelectField, SelectInput, SimpleForm, TextInput } from 'admin-on-rest';
 
 
 export const TrackList = (props) => (
@@ -9,10 +9,9 @@ export const TrackList = (props) => (
             <TextField source="id" />
             <TextField source="code" />
             <TextField source="name" />
-            <TextField source="branch[name]" label="Branch"/>
-             {/*<ReferenceField label="Branch" source="branch[id]" reference="branches" allowEmpty>
-               <SelectInput optionText="name"/>
-            </ReferenceField>*/}
+             <ReferenceField label="Branch" source="branch['id']" reference="branches" allowEmpty>
+             <TextField source="name" />
+             </ReferenceField>
            
  <EditButton />
         </Datagrid>
@@ -28,7 +27,9 @@ export const TrackEdit = (props) => (
             
             <TextInput source="name" />
             <TextInput source="code" />
-             
+               <ReferenceInput label="Track" source="id" reference="branches" allowEmpty>
+                <SelectInput optionText="name" />
+            </ReferenceInput>
            
         </SimpleForm>
     </Edit>
@@ -37,11 +38,12 @@ export const TrackEdit = (props) => (
 export const TrackCreate = (props) => (
     <Create {...props}>
         <SimpleForm>
-            <ReferenceInput label="User" source="userId" reference="users" allowEmpty>
+         
+            <TextInput source="name" />
+            <TextInput source="code" />
+               <ReferenceInput label="Track" source="id" reference="branches" allowEmpty>
                 <SelectInput optionText="name" />
             </ReferenceInput>
-            <TextInput source="title" />
-            <LongTextInput source="body" />
         </SimpleForm>
     </Create>
 );

@@ -31,8 +31,9 @@ class AttendenceAdmin extends Component
         return (
       
     <Admin authClient={authClient} dashboard={Dashboard} title="Attendance Admin" restClient={ myApiRestClient} >
+         <Resource name="tracks" list={TrackList} icon={TrackIcon} edit={TrackEdit} create={TrackCreate} remove={Delete}/>
         <Resource name="branches" list={BranchList} icon={PostIcon} edit={BranchEdit} create={BranchCreate} remove={Delete}/>
-        <Resource name="tracks" list={TrackList} icon={TrackIcon} edit={TrackEdit} create={TrackCreate} remove={Delete}/>
+       
         <Resource name="users" list={UserList} icon={UserIcon} edit={UserEdit} create={UserCreate} remove={Delete}/>
        
         
