@@ -1,22 +1,15 @@
-import React ,{component}from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap/dist/css/bootstrap-theme.css';
-import {IndexRoute} from 'react-router'
-import {BrowserRouter,Route,NavLink, Redirect, Switch,history,browserHistory} from 'react-router-dom';
-
+import {BrowserRouter,Route, Switch} from 'react-router-dom';
 import App from './App';
-import Login from './login/login';
-
-import Header from './header/header';
 import AttendenceAdmin from './admin/admin';
 import './index.css';
 import authClient from './authClient'
 
 ReactDOM.render(
 
-<BrowserRouter  history={browserHistory}>
+<BrowserRouter  >
 
 
             <Switch>

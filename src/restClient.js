@@ -26,11 +26,7 @@ const convertRESTRequestToHTTP = (type, resource, params) => {
     case GET_LIST: {
         const { page, perPage } = params.pagination;
         const { field, order } = params.sort;
-        const query = {
-            sort: JSON.stringify([field, order]),
-            range: JSON.stringify([(page - 1) * perPage, page * perPage - 1]),
-            filter: JSON.stringify(params.filter),
-        };
+    
         url = `${API_URL}/${resource}`;
         break;
     }
@@ -83,14 +79,22 @@ const convertRESTRequestToHTTP = (type, resource, params) => {
  * @returns {Object} REST response
  */
 const convertHTTPResponseToREST = (response, type, resource, params) => {
-    console.log("responce",Response)
-    const { headers, json } = response;
+   
+    const { headers, json,body } = response;
+    console.log(JSON.parse(body))
+    var objtype =''
+  if (JSON.parse(body)['type']==='user List')
+  {
+      objtype='users'
+  }
+  else { objtype='data'}
+    
     switch (type) {
     case GET_LIST:
         return {
           
-            data: json.map(x => x),
-            total: parseInt(headers.get('content-range').split('/').pop(), 10),
+            data: JSON.parse(body)[objtype],
+            total: JSON.parse(body)[objtype].length 
         };
     case CREATE:
         return { data: { ...params.data, id: json.id } };
@@ -108,12 +112,11 @@ const convertHTTPResponseToREST = (response, type, resource, params) => {
 export default (type, resource, params) => {
     const { fetchJson } = fetchUtils;
     const { url, options } = convertRESTRequestToHTTP(type, resource, params);
-    //  if (!options.headers) {
-    //     options.headers = new Headers({ Accept: 'application/json' });
-    // }
-    // const token = localStorage.getItem('token');
-    // options.headers.set('Authorization', `Bearer ${token}`);
-    // return fetchUtils.fetchJson(url, options)
-     return fetchJson(url, options)
+     if (!options.headers) {
+        options.headers = new Headers({ Accept: 'application/json' });
+    }
+    const token = localStorage.getItem('token');
+    options.headers.set('Authorization', `Bearer ${token}`);
+     return fetchUtils.fetchJson(url, options)
         .then(response => convertHTTPResponseToREST(response, type, resource, params));
 };

@@ -5,12 +5,15 @@ import {List, Edit, Create, Datagrid, ReferenceField, TextField, EditButton, Dis
 export const TrackList = (props) => (
     <List {...props}>
         <Datagrid>
-             <ReferenceField label="User" source="userId" reference="users">
-                <TextField source="name" />
-            </ReferenceField>
+            
             <TextField source="id" />
-            <TextField source="title" />
-            <TextField source="body" />
+            <TextField source="code" />
+            <TextField source="name" />
+            <TextField source="branch[name]" label="Branch"/>
+             {/*<ReferenceField label="Branch" source="branch[id]" reference="branches" allowEmpty>
+               <SelectInput optionText="name"/>
+            </ReferenceField>*/}
+           
  <EditButton />
         </Datagrid>
     </List>
@@ -20,13 +23,13 @@ const TrackName = ({ record }) => {
 };
 export const TrackEdit = (props) => (
     <Edit title={<TrackName />} {...props}>
-        <SimpleForm>
+         <SimpleForm>
             <DisabledInput source="id" />
-            <ReferenceInput label="User" source="userId" reference="users">
-                <SelectInput optionText="name" />
-            </ReferenceInput>
-            <TextInput source="title" />
-            <LongTextInput source="body" />
+            
+            <TextInput source="name" />
+            <TextInput source="code" />
+             
+           
         </SimpleForm>
     </Edit>
 );

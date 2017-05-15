@@ -1,8 +1,8 @@
 import React  ,{Component}from 'react';
-import { Card, CardHeader, CardText } from 'material-ui/Card';
+import { Card} from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
-import { NumberField }  from 'admin-on-rest';
+
 export default class dashboardclass  extends Component 
 {
     constructor(props) {
@@ -27,7 +27,7 @@ render (){
         <TextField  ref='times' floatingLabelText="Absence Times"  defaultValue=""/><br/>
         <TextField ref='grades'  floatingLabelText="Grades "/><br/>
 
-        <RaisedButton label="Save" primary={true} style={{ margin: '50' }}  onClick={this.saverule}/>
+        <RaisedButton label="Save" primary={true} style={{ margin: "3em" }}  onClick={this.saverule}/>
         </div>
     </Card>
     )}}

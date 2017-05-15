@@ -1,19 +1,14 @@
 import React from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
-
-import TextField from 'material-ui/TextField';
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
-import NavigationClose from 'material-ui/svg-icons/navigation/close';
 import FlatButton from 'material-ui/FlatButton';
 import DatePicker from 'material-ui/DatePicker';
-import UserIcon from 'material-ui/svg-icons/social/group';
+
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 import {
   Table,
-  TableBody,
-  TableHeader,
-  TableHeaderColumn,
+  TableBody,  
   TableRow,
   TableRowColumn,
 } from 'material-ui/Table';

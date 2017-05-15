@@ -5,12 +5,11 @@ import {List, Edit, Create, Datagrid, ReferenceField, TextField, EditButton, Dis
 export const BranchList = (props) => (
     <List {...props}>
         <Datagrid>
-             <ReferenceField label="User" source="userId" reference="users">
-                <TextField source="name" />
-            </ReferenceField>
+            
             <TextField source="id" />
-            <TextField source="title" />
-            <TextField source="body" />
+            <TextField source="name" />
+            <TextField source="address" />
+            <TextField source="code" />
  <EditButton />
         </Datagrid>
     </List>
@@ -22,11 +21,11 @@ export const BranchEdit = (props) => (
     <Edit title={<BranchName />} {...props}>
         <SimpleForm>
             <DisabledInput source="id" />
-            <ReferenceInput label="User" source="userId" reference="users">
-                <SelectInput optionText="name" />
-            </ReferenceInput>
-            <TextInput source="title" />
-            <LongTextInput source="body" />
+            
+            <TextInput source="name" />
+            <TextInput source="address" />
+             <TextInput source="code" />
+           
         </SimpleForm>
     </Edit>
 );
