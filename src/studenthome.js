@@ -4,7 +4,7 @@ import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import FlatButton from 'material-ui/FlatButton';
 import DatePicker from 'material-ui/DatePicker';
-
+import TextField from 'material-ui/TextField';
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 import {
   Table,
@@ -17,22 +17,30 @@ function handleTouchTap() {
 //   alert('onTouchTap triggered on the title component');
 
 }
-// date picker
+function logout(){
+  console.log("logout")
+   localStorage.removeItem('token');
+   localStorage.removeItem('user');
+    window.location = "/";
+}
 
 
-
-
-//end date picker
-
-const StudentHome = () => (
-
-
-    <div >
+ export default function StudentHome () {  
+   
+if(localStorage.getItem('user')){
+    var marks=5
+    var username=localStorage.getItem('user')
+   return(  <div >
   <AppBar
     title='Attendance System'
+     children={<p   style={{marginLeft: '2%',marginRight: '2%',marginTop: '1.8%',color:'white'}} ><b>logged in as {username} </b></p>
+     
+     }
+    
     onTitleTouchTap={handleTouchTap}
-    iconElementLeft={<IconButton></IconButton>}
-    iconElementRight={<FlatButton label="Logout"  />}
+    iconElementLeft={<IconButton  > </IconButton>}
+    iconElementRight={<FlatButton label="Logout" onTouchTap={logout}  />}
+   
  />
 
  {/*<h1>Student home </h1>*/}
@@ -46,7 +54,7 @@ const StudentHome = () => (
     />
    <hr/>
     <CardText >
-     0 Mark
+     {marks} Marks
     </CardText>
   </Card>
   <br/>
@@ -111,6 +119,12 @@ const StudentHome = () => (
 </div>
 
   </div>
-);
+    ) }
 
-export default StudentHome;
+else {
+
+
+ window.location = "/";
+
+}
+}

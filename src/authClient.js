@@ -17,6 +17,7 @@ export default (type, params) => {
                 if (response.status < 200 || response.status >= 300) {
                     throw new Error(response.statusText);
                 }
+               
                 return response.json();
             })
             .then(({ token }) => {
@@ -25,7 +26,8 @@ export default (type, params) => {
            
                 localStorage.setItem('token', token); 
                 var tok=token.split('.')[1].replace('-', '+').replace('_', '/')
-                var role= JSON.parse(atob(tok)).roles[0]
+                var role= JSON.parse(atob(tok))
+                console.log("rpole",role)
                 if(role==='ROLE_USE'){
                 localStorage.setItem('user', _username);
                 window.location = "/app";
