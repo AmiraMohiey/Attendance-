@@ -60,6 +60,7 @@ const convertRESTRequestToHTTP = (type, resource, params) => {
     case CREATE:
         url = `${API_URL}/${resource}/`;
         options.method = 'POST';
+           console.log("create",params.data)
         options.body = JSON.stringify(params.data);
         break;
     case DELETE:
@@ -98,6 +99,7 @@ const convertHTTPResponseToREST = (response, type, resource, params) => {
             total: JSON.parse(body)[objtype].length 
         };
     case CREATE:
+ 
         return { data: { ...params.data, id: json.id } };
     default:
         return { data: json };
@@ -136,7 +138,7 @@ export default (type, resource, params) => {
     }
     const token = localStorage.getItem('token');
     options.headers.set('Authorization', `Bearer ${token}`);
-     console.log("options in normal",options)
+
      return fetchUtils.fetchJson(url, options)
         .then(response => convertHTTPResponseToREST(response, type, resource, params));
 };

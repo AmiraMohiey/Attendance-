@@ -25,9 +25,9 @@ export const UserEdit = (props) => (
             
             <TextInput source="username" />
             <TextInput source="email" />
-            {/*<ReferenceInput label="Track" source="trackid" reference="tracks" allowEmpty>
+            <ReferenceInput label="Track" source="trackid" reference="tracks" allowEmpty>
                 <SelectInput optionText="name" />
-            </ReferenceInput>*/}
+            </ReferenceInput>
         </SimpleForm>
     </Edit>
 );
@@ -39,6 +39,11 @@ export const UserCreate = (props) => (
             <TextInput source="username" />
             <TextInput source="email" />
              <TextInput source="password" />
+            <SelectInput source="roles" choices={[
+    { id: 'admin' ,name: 'admin'},
+    { id: 'user' ,name: 'user' },
+
+]} />
               <ReferenceInput label="track" source="trackid" reference="tracks" allowEmpty>
                 <SelectInput optionText="name" />
             </ReferenceInput>
