@@ -10,10 +10,26 @@ export default class dashboardclass  extends Component
     this.saverule = this.saverule.bind(this);
   }
 saverule(){
-    console.log("save")
-    var time=this.refs.times.getValue();
+      var time=this.refs.times.getValue();
     var grade=this.refs.grades.getValue();
-    console.log(time,grade)
+    if(time && grade){
+         const request = new Request('http://localhost:8000/api/rules', {
+            method: 'POST',
+            headers: new Headers({ 'Content-Type': 'application/json' }),
+            body: JSON.stringify({ time, grade}),
+        })
+         return fetch(request)
+            .then(response => {          
+                if (response.status < 200 || response.status >= 300) {
+                    throw new Error(response.statusText);
+                }
+                return response.json();
+            })
+  
+    console.log(time,grade)}
+    else{
+        
+    }
 
 }
 render (){

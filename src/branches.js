@@ -32,12 +32,11 @@ export const BranchEdit = (props) => (
 
 export const BranchCreate = (props) => (
     <Create {...props}>
-        <SimpleForm>
-            <ReferenceInput label="User" source="userId" reference="users" allowEmpty>
-                <SelectInput optionText="name" />
-            </ReferenceInput>
-            <TextInput source="title" />
-            <LongTextInput source="body" />
+        <SimpleForm>    
+            <TextInput source="name" />
+            <TextInput source="address" />
+             <TextInput source="code" />
+           
         </SimpleForm>
     </Create>
 );

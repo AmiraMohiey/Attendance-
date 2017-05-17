@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {List, Edit, Create, Datagrid, TextField, EditButton, DisabledInput, LongTextInput, ReferenceInput, SelectInput, SimpleForm, TextInput,EmailField } from 'admin-on-rest';
+import {List, Edit, Create, ReferenceField,Datagrid, TextField, EditButton, DisabledInput, LongTextInput, ReferenceInput, SelectInput, SimpleForm, TextInput,EmailField } from 'admin-on-rest';
 
 export const UserList = (props) => (
     <List title="All users" {...props}>
@@ -8,9 +8,9 @@ export const UserList = (props) => (
             <TextField source="id" />
             <TextField source="username" />
             <EmailField source="email" />
-              {/*<ReferenceInput label="TRACK" source="track_id" reference="tracks">
-                <SelectInput optionText="name" />
-            </ReferenceInput>*/}
+              <ReferenceField label="TRACK" source="trackid" reference="tracks" allowEmpty>
+                <TextField source="name" />
+            </ReferenceField>
   <EditButton />
         </Datagrid>
     </List>
@@ -25,9 +25,9 @@ export const UserEdit = (props) => (
             
             <TextInput source="username" />
             <TextInput source="email" />
-            <ReferenceInput label="Track" source="track_id" reference="tracks" allowEmpty>
+            {/*<ReferenceInput label="Track" source="trackid" reference="tracks" allowEmpty>
                 <SelectInput optionText="name" />
-            </ReferenceInput>
+            </ReferenceInput>*/}
         </SimpleForm>
     </Edit>
 );
@@ -39,8 +39,8 @@ export const UserCreate = (props) => (
             <TextInput source="username" />
             <TextInput source="email" />
              <TextInput source="password" />
-               <ReferenceInput label="Track" source="track_id" reference="tracks" allowEmpty>
-                <SelectInput optionText="track" />
+              <ReferenceInput label="track" source="trackid" reference="tracks" allowEmpty>
+                <SelectInput optionText="name" />
             </ReferenceInput>
         </SimpleForm>
     </Create>

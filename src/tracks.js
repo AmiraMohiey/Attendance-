@@ -9,6 +9,7 @@ export const TrackList = (props) => (
             <TextField source="id" />
             <TextField source="code" />
             <TextField source="name" />
+           <TextField label="Branch" source="branch['name']" />
              <ReferenceField label="Branch" source="branch['id']" reference="branches" allowEmpty>
              <TextField source="name" />
              </ReferenceField>
@@ -27,7 +28,8 @@ export const TrackEdit = (props) => (
             
             <TextInput source="name" />
             <TextInput source="code" />
-               <ReferenceInput label="Track" source="id" reference="branches" allowEmpty>
+     
+               <ReferenceInput label="Branch" source="branch['id']" reference="branches" allowEmpty>
                 <SelectInput optionText="name" />
             </ReferenceInput>
            
@@ -41,7 +43,7 @@ export const TrackCreate = (props) => (
          
             <TextInput source="name" />
             <TextInput source="code" />
-               <ReferenceInput label="Track" source="id" reference="branches" allowEmpty>
+               <ReferenceInput label="branch" source="branch['id']" reference="branches" allowEmpty>
                 <SelectInput optionText="name" />
             </ReferenceInput>
         </SimpleForm>

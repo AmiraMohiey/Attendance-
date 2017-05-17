@@ -4,7 +4,7 @@ import { AUTH_LOGIN, AUTH_LOGOUT, AUTH_ERROR, AUTH_CHECK} from 'admin-on-rest';
 
 export default (type, params) => {
     if (type === AUTH_LOGIN) {
-         localStorage.setItem('token', "123");
+
          const _username = params.username;
          const _password = params.password;
          const request = new Request('http://localhost:8000/api/login_check', {
