@@ -26,7 +26,7 @@ export default (type, params) => {
            
                 localStorage.setItem('token', token); 
                 var tok=token.split('.')[1].replace('-', '+').replace('_', '/')
-                var role= JSON.parse(atob(tok))
+                var role= JSON.parse(atob(tok)).roles[0]
                 console.log("rpole",role)
                 if(role==='ROLE_USE'){
                 localStorage.setItem('user', _username);

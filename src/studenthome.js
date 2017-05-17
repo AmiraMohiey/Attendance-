@@ -12,23 +12,48 @@ import {
   TableRow,
   TableRowColumn,
 } from 'material-ui/Table';
+var permission_date=''
 
-function handleTouchTap() {
-//   alert('onTouchTap triggered on the title component');
 
+function askforpermission(e) {
+  if(permission_date){
+    // send permission request
+console.log(permission_date)}
+else{
+
+  // alert choosedate
 }
+}
+
+
+function getdatepicker(x,date)
+{
+  permission_date= date.toDateString()
+}
+
+
 function logout(){
   console.log("logout")
-   localStorage.removeItem('token');
-   localStorage.removeItem('user');
-    window.location = "/";
+  localStorage.removeItem('token');
+  localStorage.removeItem('user');
+  window.location = "/";
 }
 
 
  export default function StudentHome () {  
    
 if(localStorage.getItem('user')){
-    var marks=5
+  var marks=5
+
+ var perms = ['12-3-2017', '20-4-2017', '1-5-2017'];
+        var permList = perms.map(function(perm,i){
+                        return   <TableRow  key={i}>
+        <TableRowColumn>{perm }</TableRowColumn>
+
+      </TableRow>;
+                      })
+
+
     var username=localStorage.getItem('user')
    return(  <div >
   <AppBar
@@ -37,7 +62,7 @@ if(localStorage.getItem('user')){
      
      }
     
-    onTitleTouchTap={handleTouchTap}
+
     iconElementLeft={<IconButton  > </IconButton>}
     iconElementRight={<FlatButton label="Logout" onTouchTap={logout}  />}
    
@@ -62,16 +87,13 @@ if(localStorage.getItem('user')){
      
     <CardHeader
     
-      title="Permissions" 
-     
-
-      /*subtitle="Subtitle"*/ />
+      title="Permissions"  />
    <hr/>
     <CardText >
-      <DatePicker hintText="Choose a Date"  minDate={new Date()}/>
+      <DatePicker hintText="Choose a Date"  minDate={new Date()} onChange={(x, date) => getdatepicker(x,date)} />
     </CardText>
      <CardActions>
-      <RaisedButton  primary={true} label="Ask for permission" style={{marginBottom:"5%",marginLeft:"70%"}} />
+      <RaisedButton  primary={true} label="Ask for permission" style={{marginBottom:"5%",marginLeft:"70%"}} onTouchTap={askforpermission}/>
     
     </CardActions>
   </Card>
@@ -93,22 +115,11 @@ if(localStorage.getItem('user')){
 
      
     <TableBody displayRowCheckbox={false}>
-      <TableRow>
-        <TableRowColumn>{new Date().toDateString()}</TableRowColumn>
+    
+        {permList}
 
-      </TableRow>
-      <TableRow>
-        <TableRowColumn>{new Date().toDateString()}</TableRowColumn>
-  
-      </TableRow>
-      <TableRow>
-        <TableRowColumn>{new Date().toDateString()}</TableRowColumn>
      
-      </TableRow>
-      <TableRow>
-        <TableRowColumn>{new Date().toDateString()}</TableRowColumn>
-
-      </TableRow>
+    
       
     </TableBody>
   </Table>
