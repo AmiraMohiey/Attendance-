@@ -7,6 +7,7 @@ import IconButton from 'material-ui/IconButton';
 import FlatButton from 'material-ui/FlatButton';
 import DatePicker from 'material-ui/DatePicker';
 import TextField from 'material-ui/TextField';
+import Dialog from 'material-ui/Dialog';
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 import {
   Table,
@@ -21,22 +22,49 @@ super(props)
 this.state={ username:localStorage.getItem('user')}
 this.state={ permission_date:""}
 this.state={userid:"",marks:'1'}
-this.state={ absence_days:[{date:""}] ,permission_days:[{date:""}]}
-// this.state={ permission_days:[{date:""}]}
+this.state={ absence_days:[{date:""}] ,permission_days:[{date:""}],open: false}
+
 this.askforpermission = this.askforpermission.bind(this);
 this.getdatepicker = this.getdatepicker.bind(this);
 this.logout = this.logout.bind(this);
+this.handleClose=this.handleClose.bind(this)
  this.connection()
 
 
 }
 
-
+ handleClose = () => {
+    this.setState({open: false});
+  };
 askforpermission() {
   if(this.state.permission_date){
     // send permission request
-console.log(this.state.permission_date)
-console.log(this.state.userid)}
+var date=this.state.permission_date
+var user=this.state.userid
+
+
+
+
+  const token = localStorage.getItem('token');
+          const request = new Request('http://localhost:8000/api/permissions/', {
+            method: 'POST',
+            headers: new Headers({ 'Content-Type': 'application/json' ,'Authorization': `Bearer ${token}`}),
+            body:JSON.stringify({date,user})
+        })
+         return fetch(request)
+            .then(response => {          
+             
+                return response.json();
+            }).then(({type})=>{ if(type=="sucess"){
+              this.setState({open:true})
+
+
+
+
+            }})
+  }
+
+
 else{
 
   // console.log(perms)
@@ -69,21 +97,23 @@ connection(){ console.log("get user info")
                 return response.json();
             })
             .then(({ user }) => { 
-              // perms.push (user['permissions'])
-              // marks=user['id']
-
               this.setState({absence_days:user['absencetable']},()=>{console.log(this.state.absence_days)})
               this.setState({permission_days:user['permissions']},()=>{console.log(this.state.permission_days)})
-               this.setState({userid:user['id']},()=>{console.log(this.state.userid)})
+              this.setState({userid:user['id']},()=>{console.log(this.state.userid)})
             console.log("user",user)
-        //  console.log("perms ",perms )
-        //    console.log("marks ",marks )
-
         })}
 render(){
+
  if(localStorage.getItem('user')){
  
-
+ const actions = [
+      <RaisedButton
+        label="OK"
+        secondary={true}
+        onTouchTap={this.handleClose}
+      />,
+  
+    ];
   return( <MuiThemeProvider>
   
   
@@ -208,6 +238,25 @@ render(){
   </Card>
 
 </div>
+
+
+
+
+
+
+ <div style={{textAlign:'center'}}>
+      
+        <Dialog
+        
+          modal={false}
+          actions={actions}
+          open={this.state.open}
+          onRequestClose={this.handleClose}
+        >
+         <b>permission request has been sent successfully </b>
+        </Dialog>
+      </div>
+
 
   </div>
   </MuiThemeProvider>)
