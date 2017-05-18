@@ -4,10 +4,10 @@ import { AUTH_LOGIN, AUTH_LOGOUT, AUTH_ERROR, AUTH_CHECK} from 'admin-on-rest';
 
 export default (type, params) => {
     if (type === AUTH_LOGIN) {
-
+// http://symfonict.herokuapp.com/api/login_check
          const _username = params.username;
          const _password = params.password;
-         const request = new Request('http://localhost:8000/api/login_check', {
+         const request = new Request(' https://symfonict.herokuapp.com/api/login_check', {
             method: 'POST',
             headers: new Headers({ 'Content-Type': 'application/json' }),
             body: JSON.stringify({ _username, _password }),
@@ -28,7 +28,7 @@ export default (type, params) => {
                 var tok=token.split('.')[1].replace('-', '+').replace('_', '/')
                 var role= JSON.parse(atob(tok)).roles[0]
                 console.log("rpole",role)
-                if(role==='ROLE_USE'){
+                if(role==='ROLE_USER'){
                 localStorage.setItem('user', _username);
                 window.location = "/app";
                   

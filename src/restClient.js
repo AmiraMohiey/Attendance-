@@ -9,7 +9,7 @@ import {
     fetchUtils,
 } from 'admin-on-rest';
 import { queryParameters, fetchJson } from 'admin-on-rest';
-const API_URL = 'http://localhost:8000/api'; // symfony url 
+const API_URL = 'https://symfonict.herokuapp.com/api'; // symfony url 
 
 /**
  * @param {String} type One of the constants appearing at the top if this file, e.g. 'UPDATE'
@@ -41,7 +41,7 @@ const convertRESTRequestToHTTP = (type, resource, params) => {
         break;
     }
     case GET_MANY_REFERENCE: {
-        console.log("get refrence")
+        
         const { page, perPage } = params.pagination;
         const { field, order } = params.sort;
         const query = {
@@ -53,14 +53,19 @@ const convertRESTRequestToHTTP = (type, resource, params) => {
         break;
     }
     case UPDATE:
-        url = `${API_URL}/${resource}/${params.id}/edit`;
+    console.log(resource)
+    if(resource==='permissions')
+    { url = `${API_URL}/${resource}/${params.id}/accept`;}
+    else{
+        url = `${API_URL}/${resource}/${params.id}`;}
         options.method = 'PUT';
+       
         options.body = JSON.stringify(params.data);
         break;
     case CREATE:
         url = `${API_URL}/${resource}/`;
         options.method = 'POST';
-           console.log("create",params.data)
+           
         options.body = JSON.stringify(params.data);
         break;
     case DELETE:
@@ -83,7 +88,7 @@ const convertRESTRequestToHTTP = (type, resource, params) => {
 const convertHTTPResponseToREST = (response, type, resource, params) => {
    
     const { headers, json,body } = response;
-    console.log("response body",JSON.parse(body))
+   
     var objtype =''
   if (JSON.parse(body)['type']==='user List')
   {

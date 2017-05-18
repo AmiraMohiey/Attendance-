@@ -23,6 +23,11 @@ export const PermissionEdit = (props) => (
             <DisabledInput source="id" />
             
             <BooleanField source="accepted" />
+                      <SelectInput source="accepted" choices={[
+    { id: 'true' ,name: 'accept'},
+    { id: 'false' ,name: 'deny' },
+
+]} />
             <DateField source="date" />
            <TextField  source="user['username']" label="User" />
         </SimpleForm>

@@ -19,15 +19,21 @@ export default class App extends Component {
 constructor(props){
 
 super(props)
-this.state={ username:localStorage.getItem('user')}
+
 this.state={ permission_date:""}
-this.state={userid:"",marks:'1'}
-this.state={ absence_days:[{date:""}] ,permission_days:[{date:""}],open: false}
+this.state={userid:""}
+this.state={ absence_days:[{date:""}] ,
+permission_days:[{date:""}],
+open: false,
+username:localStorage.getItem('user'),
+marks:'1'
+}
 
 this.askforpermission = this.askforpermission.bind(this);
 this.getdatepicker = this.getdatepicker.bind(this);
 this.logout = this.logout.bind(this);
 this.handleClose=this.handleClose.bind(this)
+this.getgrades=this.getgrades.bind(this)
  this.connection()
 
 
@@ -41,12 +47,8 @@ askforpermission() {
     // send permission request
 var date=this.state.permission_date
 var user=this.state.userid
-
-
-
-
   const token = localStorage.getItem('token');
-          const request = new Request('http://localhost:8000/api/permissions/', {
+          const request = new Request('https://symfonict.herokuapp.com/api/permissions/', {
             method: 'POST',
             headers: new Headers({ 'Content-Type': 'application/json' ,'Authorization': `Bearer ${token}`}),
             body:JSON.stringify({date,user})
@@ -67,26 +69,42 @@ var user=this.state.userid
 
 else{
 
-  // console.log(perms)
-  // console.log(marks)
 }
 }
+getgrades(id){
+  const token = localStorage.getItem('token');
+          const request = new Request('https://symfonict.herokuapp.com/api/users/'+id+'/marks', {
+            method: 'GET',
+            headers: new Headers({ 'Content-Type': 'application/json' ,'Authorization': `Bearer ${token}`}),
+          
+        })
+         return fetch(request)
+            .then(response => {          
+       
+                return response.json();
+            })
+            .then(({ data }) => {
+             
+          this.setState({marks:data.total})
 
+             })
+    
+}
 getdatepicker(x,date)
 {
 
    this.setState({permission_date:date.toDateString()})
-console.log("date",this.state.permission_date)
+
 }
 logout(){
-  console.log("logout")
+ 
   localStorage.removeItem('token');
   localStorage.removeItem('user');
   window.location = "/";
 }
-connection(){ console.log("get user info")
+connection(){ 
          const token = localStorage.getItem('token');
-          const request = new Request('http://localhost:8000/api/users/me', {
+          const request = new Request('https://symfonict.herokuapp.com/api/users/me', {
             method: 'GET',
             headers: new Headers({ 'Content-Type': 'application/json' ,'Authorization': `Bearer ${token}`}),
           
@@ -97,10 +115,10 @@ connection(){ console.log("get user info")
                 return response.json();
             })
             .then(({ user }) => { 
-              this.setState({absence_days:user['absencetable']},()=>{console.log(this.state.absence_days)})
-              this.setState({permission_days:user['permissions']},()=>{console.log(this.state.permission_days)})
-              this.setState({userid:user['id']},()=>{console.log(this.state.userid)})
-            console.log("user",user)
+              this.setState({absence_days:user['absencetable']})
+              this.setState({permission_days:user['permissions']})
+              this.setState({userid:user['id']},()=>{this.getgrades(this.state.userid)})
+           
         })}
 render(){
 
@@ -135,14 +153,14 @@ render(){
 
   <Card>
     <CardHeader
-      title="My deducted Marks"
+      title="My Marks"
   
     
     />
    <hr/>
     <CardText >
-      {console.log(this.state.marks)}
-     { this.state.marks } mark
+     
+     { this.state.marks } marks
     </CardText>
   </Card>
   <br/>
