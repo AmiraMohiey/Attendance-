@@ -19,26 +19,36 @@ constructor(props){
 
 super(props)
 this.state={ username:localStorage.getItem('user')}
-this.states={ "permission_date":""}
+this.state={ permission_date:""}
+this.state={userid:"",marks:'1'}
+this.state={ absence_days:[{date:""}] ,permission_days:[{date:""}]}
+// this.state={ permission_days:[{date:""}]}
+this.askforpermission = this.askforpermission.bind(this);
+this.getdatepicker = this.getdatepicker.bind(this);
+this.logout = this.logout.bind(this);
  this.connection()
 
 
 }
 
 
-askforpermission(e) {
-  if(this.states.permission_date){
+askforpermission() {
+  if(this.state.permission_date){
     // send permission request
-console.log(this.states.permission_date)}
+console.log(this.state.permission_date)
+console.log(this.state.userid)}
 else{
 
   // console.log(perms)
   // console.log(marks)
 }
 }
+
 getdatepicker(x,date)
 {
-  // this.states.permission_date= date.toDateString()
+
+   this.setState({permission_date:date.toDateString()})
+console.log("date",this.state.permission_date)
 }
 logout(){
   console.log("logout")
@@ -61,6 +71,10 @@ connection(){ console.log("get user info")
             .then(({ user }) => { 
               // perms.push (user['permissions'])
               // marks=user['id']
+
+              this.setState({absence_days:user['absencetable']},()=>{console.log(this.state.absence_days)})
+              this.setState({permission_days:user['permissions']},()=>{console.log(this.state.permission_days)})
+               this.setState({userid:user['id']},()=>{console.log(this.state.userid)})
             console.log("user",user)
         //  console.log("perms ",perms )
         //    console.log("marks ",marks )
@@ -97,7 +111,8 @@ render(){
     />
    <hr/>
     <CardText >
-     5 Marks
+      {console.log(this.state.marks)}
+     { this.state.marks } mark
     </CardText>
   </Card>
   <br/>
@@ -134,16 +149,63 @@ render(){
      
     <TableBody displayRowCheckbox={false}>
     
-        {/*{ console.log(permList)}*/}
+       {this.state.permission_days.map(function(object, i){
+        return (
+        
+         < TableRow key={i} >
+   <TableRowColumn>
+        {object.date.split("T")[0]} 
+
+
+</TableRowColumn>
+     </TableRow>
+        );
+    })}
+
+      
+    </TableBody>
+  </Table>
+    </CardText>
+  </Card>
+<br/>
+ <Card    >
+     
+    <CardHeader
+    
+      title="List My absence days"
+
+      actAsExpander={true}
+      showExpandableButton={true}
+    />
+      <hr/>
+    <CardText expandable={true}>
+ <Table>
+  
 
      
+    <TableBody displayRowCheckbox={false}>
+ {this.state.absence_days.map(function(object, i){
+        return (
+        
+         < TableRow key={i} >
+   <TableRowColumn>
+        {object.date.split("T")[0]} 
+
+
+</TableRowColumn>
+     </TableRow>
+        );
+    })}
+
+
+
+ 
     
       
     </TableBody>
   </Table>
     </CardText>
   </Card>
-
 
 </div>
 
