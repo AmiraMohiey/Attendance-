@@ -13,7 +13,8 @@ import {
   TableRowColumn,
 } from 'material-ui/Table';
 var permission_date=''
-
+var perms=[]
+var marks=''
 
 function askforpermission(e) {
   if(permission_date){
@@ -21,7 +22,8 @@ function askforpermission(e) {
 console.log(permission_date)}
 else{
 
-  // alert choosedate
+  console.log(perms)
+  console.log(marks)
 }
 }
 
@@ -39,13 +41,14 @@ function logout(){
   window.location = "/";
 }
 
+ export default function myrender(){
+     getuserinfo()
+  if(localStorage.getItem('user')){
+ 
 
- export default function StudentHome () {  
-   
-if(localStorage.getItem('user')){
-  var marks=5
 
- var perms = ['12-3-2017', '20-4-2017', '1-5-2017'];
+//  var perms = ['12-3-2017', '20-4-2017', '1-5-2017'];
+ console.log("perms",perms) 
         var permList = perms.map(function(perm,i){
                         return   <TableRow  key={i}>
         <TableRowColumn>{perm }</TableRowColumn>
@@ -68,7 +71,7 @@ if(localStorage.getItem('user')){
    
  />
 
- {/*<h1>Student home </h1>*/}
+
 <div style={{marginLeft: '25%',width: '50%',marginTop: '2%'}}>
 
   <Card>
@@ -99,12 +102,12 @@ if(localStorage.getItem('user')){
   </Card>
 
  <br/>
-  <Card>
+  <Card    >
      
     <CardHeader
-     
+    
       title="List My permissions"
-  
+
       actAsExpander={true}
       showExpandableButton={true}
     />
@@ -116,7 +119,7 @@ if(localStorage.getItem('user')){
      
     <TableBody displayRowCheckbox={false}>
     
-        {permList}
+        { console.log(permList)}
 
      
     
@@ -138,4 +141,27 @@ else {
  window.location = "/";
 
 }
+}
+ function  getuserinfo() {  
+     console.log("get user info")
+         const token = localStorage.getItem('token');
+          const request = new Request('http://localhost:8000/api/users/me', {
+            method: 'GET',
+            headers: new Headers({ 'Content-Type': 'application/json' ,'Authorization': `Bearer ${token}`}),
+          
+        })
+         return fetch(request)
+            .then(response => {          
+              
+                return response.json();
+            })
+            .then(({ user }) => { 
+              perms.push (user['permissions'])
+              marks=user['id']
+            console.log("user",user)
+         console.log("perms ",perms )
+           console.log("marks ",marks )
+        })
+
+
 }
